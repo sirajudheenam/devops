@@ -1,0 +1,25 @@
+# vault-config.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: vault-config
+data:
+  vault.hcl: |
+    ui = true
+
+    listener "tcp" {
+      address     = "0.0.0.0:8200"
+      tls_disable = 1
+    }
+
+    storage "raft" {
+      path    = "/vault/data"
+      node_id = "raft_node_1"
+    }
+
+    disable_mlock = true
+
+    # Required for raft
+    api_addr     = "http://0.0.0.0:8200"
+    cluster_addr = "http://0.0.0.0:8201"
+

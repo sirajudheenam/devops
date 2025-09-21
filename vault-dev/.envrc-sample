@@ -1,0 +1,12 @@
+export VAULT_DEV_UNSEAL_KEY=<UNSEAL_KEY>
+export VAULT_DEV_ROOT_TOKEN=<TOKEN>
+export VAULT_ADDR=<VAULT_ADDR>
+export VAULT_SKIP_VERIFY=true # | false # skip TLS verification
+export VAULT_FORMAT=table # json|table|yaml # default table
+# export VAULT_AGENT_ADDR=""
+# export VAULT_CACERT=""
+# export VAULT_CAPATH=""
+# export VAULT_CLIENT_CERT=""
+# export VAULT_CLIENT_KEY=""
+# export VAULT_DISABLE_REDIRECTS=false # | true
+# export VAULT_TLS_SERVER_NAME=""

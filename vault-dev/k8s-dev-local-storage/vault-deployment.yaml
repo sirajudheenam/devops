@@ -1,0 +1,45 @@
+# vault-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vault
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: vault
+  template:
+    metadata:
+      labels:
+        app: vault
+    spec:
+      containers:
+      - name: vault
+        image: hashicorp/vault:latest
+        command: ["vault", "server", "-dev"] 
+        ports:
+          - containerPort: 8200
+        volumeMounts:
+          - name: vault-storage
+            mountPath: /vault/data
+        securityContext:
+          capabilities:
+            add: ["IPC_LOCK"]
+
+      volumes:
+        - name: vault-storage
+          persistentVolumeClaim:
+            claimName: vault-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: vault
+spec:
+  type: NodePort
+  ports:
+    - port: 8200
+      targetPort: 8200
+      nodePort: 30200
+  selector:
+    app: vault

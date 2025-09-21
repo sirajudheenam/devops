@@ -1,0 +1,23 @@
+---
+resources:
+- name: booklit
+  type: git
+  source:
+    uri: https://github.com/concourse/booklit
+    branch: master
+
+jobs:
+- name: unit
+  plan:
+  - get: booklit
+    trigger: true
+  - task: run-unit
+    file: booklit/ci/test.yml
+
+- name: build
+  plan:
+  - get: booklit
+    passed: [unit]
+    trigger: true
+  - task: run-build
+    file: booklit/ci/build.yml

@@ -1,0 +1,19 @@
+---
+resource_types:
+- name: rss
+  type: registry-image
+  source:
+    repository: suhlig/concourse-rss-resource
+    tag: latest
+
+resources:
+- name: dinosaur-comics
+  type: rss
+  source:
+    url: http://www.qwantz.com/rssfeed.php
+
+jobs:
+- name: announce
+  plan:
+  - get: dinosaur-comics
+    trigger: true

@@ -1,0 +1,23 @@
+resources:
+- name: concourse-examples
+  type: git
+  icon: github
+  source:
+    uri: https://github.com/concourse/examples
+
+jobs:
+- name: read-the-readme
+  plan:
+  - get: concourse-examples
+  - task: cat-readme
+    config:
+      platform: linux
+      image_resource:
+        type: registry-image
+        source:
+          repository: busybox
+      inputs: # pass concourse-examples into this task step
+      - name: concourse-examples
+      run:
+        path: cat
+        args: ["concourse-examples/README.md"]
